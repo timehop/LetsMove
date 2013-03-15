@@ -214,6 +214,14 @@
 		if (CFURLGetFSRef(url, &fsRef))
 		{
 			Boolean targetIsFolder, wasAliased;
+			
+			/*
+				JZ:
+				Information on FSResolveAliasFileWithMountFlags deprecation can be found here:
+				https://developer.apple.com/library/mac/#documentation/Carbon/Reference/Alias_Manager/DeprecationAppendix/AppendixADeprecatedAPI.html#//apple_ref/doc/uid/TP30000146-AppendixA-DontLinkElementID_78
+				To summarize fix: Deprecated in OS X v10.8. First use CFURLCreateBookmarkDataFromFile, then use CFURLCreateByResolvingBookmarkData
+			*/
+			
 			OSErr err = FSResolveAliasFileWithMountFlags(
 				&fsRef, false, &targetIsFolder, &wasAliased, kResolveAliasFileNoUI);
 			if ((err == noErr) && wasAliased)
