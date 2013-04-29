@@ -122,7 +122,11 @@ void PFMoveToApplicationsFolderIfNecessary(void) {
 		[NSApp activateIgnoringOtherApps:YES];
 	}
 
+#ifdef DEBUG
 	if ([alert runModal] == NSAlertFirstButtonReturn) {
+#else // suppress alert in release build
+	if (1) {
+#endif
 		NSLog(@"INFO -- Moving myself to the Applications folder");
 
 		// Move
